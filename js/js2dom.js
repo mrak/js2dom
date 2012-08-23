@@ -20,6 +20,7 @@
     attributes = '';
     for (name in el) {
       value = el[name];
+      name = name.toLowerCase();
       if (isAttribute(name)) {
         attributes += ' ' + name + '="' + value + '"';
       }
@@ -44,8 +45,11 @@
     return tag === 'area' || tag === 'base' || tag === 'br' || tag === 'col' || tag === 'command' || tag === 'embed' || tag === 'hr' || tag === 'img' || tag === 'input' || tag === 'link' || tag === 'meta' || tag === 'param' || tag === 'source';
   };
 
-  exports.js2html = js2html = function(element) {
+  js2html = function(element) {
     var html;
+    if (typeof element === 'function') {
+      return '';
+    }
     element = element || '';
     if (isBaseType(element)) {
       return element;
@@ -56,6 +60,7 @@
     if (!element.tag) {
       element.tag = 'div';
     }
+    element.tag = element.tag.toLowerCase();
     html = '<' + element.tag;
     html += generateAttributes(element);
     html += '>';
@@ -69,8 +74,11 @@
     return html;
   };
 
-  exports.js2xhtml = js2xhtml = function(element) {
+  js2xhtml = function(element) {
     var html;
+    if (typeof element === 'function') {
+      return '';
+    }
     element = element || '';
     if (isBaseType(element)) {
       return element;
@@ -81,6 +89,7 @@
     if (!element.tag) {
       element.tag = 'div';
     }
+    element.tag = element.tag.toLowerCase();
     html = '<' + element.tag;
     html += generateAttributes(element);
     if (tagIsUnary(element.tag)) {
@@ -93,6 +102,14 @@
     html += '</' + element.tag + '>';
     return html;
   };
+
+  if (typeof exports !== "undefined" && exports !== null) {
+    exports.js2html = js2html;
+  }
+
+  if (typeof exports !== "undefined" && exports !== null) {
+    exports.js2xhtml = js2xhtml;
+  }
 
   if (typeof window !== "undefined" && window !== null) {
     window.js2html = js2html;

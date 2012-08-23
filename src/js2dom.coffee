@@ -39,7 +39,7 @@ tagIsUnary = (tag) ->
       'source'
    ]
 
-exports.js2html = js2html = (element) ->
+js2html = (element) ->
    if typeof element is 'function' then return ''
    element = element or ''
 
@@ -60,7 +60,7 @@ exports.js2html = js2html = (element) ->
 
    return html
 
-exports.js2xhtml = js2xhtml = (element) ->
+js2xhtml = (element) ->
    if typeof element is 'function' then return ''
    element = element or ''
 
@@ -82,5 +82,7 @@ exports.js2xhtml = js2xhtml = (element) ->
 
    return html
 
+exports?.js2html = js2html
+exports?.js2xhtml = js2xhtml
 window?.js2html = js2html
 window?.js2xhtml = js2xhtml
