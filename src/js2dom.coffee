@@ -8,6 +8,7 @@ fromArray = (array, js2x) ->
 generateAttributes = (el) ->
    attributes = ''
    for name,value of el
+      name = name.toLowerCase()
       if isAttribute name
          attributes += ' ' + name + '="' + value + '"'
    return attributes
@@ -39,12 +40,15 @@ tagIsUnary = (tag) ->
    ]
 
 exports.js2html = js2html = (element) ->
+   if typeof element is 'function' then return ''
    element = element or ''
 
    if isBaseType(element) then return element
    if isArray element then return fromArray element
 
    unless element.tag then element.tag = 'div'
+   element.tag = element.tag.toLowerCase()
+
    html = '<' + element.tag
    html += generateAttributes(element)
 
@@ -57,12 +61,15 @@ exports.js2html = js2html = (element) ->
    return html
 
 exports.js2xhtml = js2xhtml = (element) ->
+   if typeof element is 'function' then return ''
    element = element or ''
 
    if isBaseType(element) then return element
    if isArray element then return fromArray element, js2xhtml
 
    unless element.tag then element.tag = 'div'
+   element.tag = element.tag.toLowerCase()
+
    html = '<' + element.tag
    html += generateAttributes(element)
 
